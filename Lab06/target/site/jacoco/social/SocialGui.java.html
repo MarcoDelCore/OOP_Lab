@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SocialGui.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">social</a> &gt; <a href="index.source.html" class="el_package">social</a> &gt; <span class="el_source">SocialGui.java</span></div><h1>SocialGui.java</h1><pre class="source lang-java linenums">package social;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.Serial;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+
+public class SocialGui extends JFrame implements KeyListener{
+	@Serial
+	private static final long serialVersionUID = 1L;
+
+	// The following components are declared public
+	// in order to allow testing the user interface
+	
+	/**
+	 * The code of the person to log in
+	 */
+	public JTextField id ;
+	
+	/**
+	 * The button to perform login
+	 */
+	public JButton login ;
+	
+	/**
+	 * The label that shall contain the info
+	 * of the logged in person 
+	 */
+	public JLabel name ;
+	
+	/**
+	 * The list of friends of the person
+	 * that is logged in
+	 */
+	public JList&lt;String&gt; friends ;
+	
+	private Social s;
+	
+	public JLabel text;
+	
+	public JDialog errorMessage;
+	
+
+<span class="fc" id="L55">	public SocialGui(Social m){</span>
+<span class="fc" id="L56">		s = m;</span>
+		
+<span class="fc" id="L58">		setTitle(&quot;MyFacebook&quot;);</span>
+<span class="fc" id="L59">		setSize(500,500);</span>
+		
+<span class="fc" id="L61">		text = new JLabel(&quot;ID:&quot;);</span>
+<span class="fc" id="L62">		id = new JTextField(10);</span>
+<span class="fc" id="L63">		name = new  JLabel(&quot;User name&quot;);</span>
+<span class="fc" id="L64">		login = new JButton(&quot;Login&quot;);</span>
+<span class="fc" id="L65">		friends = new JList&lt;&gt;();</span>
+<span class="fc" id="L66">		id.addKeyListener(this);</span>
+		
+<span class="fc" id="L68">		setLayout(new BorderLayout());</span>
+<span class="fc" id="L69">		JPanel upper = new JPanel();</span>
+<span class="fc" id="L70">		upper.setLayout(new FlowLayout());</span>
+		
+<span class="fc" id="L72">		JPanel mid = new JPanel();</span>
+<span class="fc" id="L73">		mid.setLayout(new BorderLayout());</span>
+		
+<span class="fc" id="L75">		upper.add(text);</span>
+<span class="fc" id="L76">		upper.add(id);</span>
+<span class="fc" id="L77">		upper.add(login);</span>
+		
+<span class="fc" id="L79">		mid.add(name, BorderLayout.NORTH);</span>
+<span class="fc" id="L80">		mid.add(friends);</span>
+<span class="fc" id="L81">		add(upper, BorderLayout.NORTH);</span>
+<span class="fc" id="L82">		add(mid, BorderLayout.CENTER);</span>
+		
+<span class="fc" id="L84">		login.addActionListener(</span>
+				evento -&gt; {
+<span class="fc" id="L86">					String p = id.getText();</span>
+<span class="fc" id="L87">					aggiorna(p);</span>
+<span class="fc" id="L88">				});</span>
+		
+		
+		
+<span class="fc" id="L92">		setDefaultCloseOperation(DISPOSE_ON_CLOSE);</span>
+
+<span class="fc" id="L94">		setVisible(true);</span>
+<span class="fc" id="L95">	}</span>
+
+	public void aggiorna(String p) {
+		String[] res;
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (! s.users.containsKey(p)) {</span>
+<span class="fc" id="L100">			errorMessage = new JDialog(this, &quot;Login error&quot;);</span>
+<span class="fc" id="L101">			JLabel e = new JLabel(&quot;The user code is invalid!&quot;);</span>
+<span class="fc" id="L102">			JButton d = new JButton(&quot;OK&quot;);</span>
+<span class="fc" id="L103">			errorMessage.setLayout(new BorderLayout());</span>
+<span class="fc" id="L104">			errorMessage.add(e, BorderLayout.NORTH);</span>
+<span class="fc" id="L105">			errorMessage.add(d, BorderLayout.AFTER_LAST_LINE);</span>
+<span class="fc" id="L106">			JRootPane rootPane = SwingUtilities.getRootPane(d); </span>
+<span class="fc" id="L107">			rootPane.setDefaultButton(d);</span>
+<span class="fc" id="L108">			d.addActionListener(</span>
+					evento -&gt; {
+<span class="fc" id="L110">						errorMessage.dispose();</span>
+<span class="fc" id="L111">					});</span>
+<span class="fc" id="L112">			errorMessage.setSize(200,200);</span>
+<span class="fc" id="L113">			errorMessage.setVisible(true);</span>
+			
+<span class="fc" id="L115">		}</span>
+		else {
+<span class="fc" id="L117">			name.setText(s.users.get(p).toString());</span>
+<span class="fc" id="L118">			res = s.users.get(p).getFriends().toArray(String[]::new);</span>
+<span class="fc" id="L119">			friends.setListData(res);</span>
+		}
+<span class="fc" id="L121">	}</span>
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+<span class="fc" id="L127">	}</span>
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+<span class="fc" id="L133">	}</span>
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+<span class="fc" id="L137">		int key = e.getKeyCode();</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (key == KeyEvent.VK_ENTER) login.doClick();</span>
+		
+<span class="fc" id="L140">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

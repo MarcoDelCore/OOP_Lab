@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Social.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">social</a> &gt; <a href="index.source.html" class="el_package">social</a> &gt; <span class="el_source">Social.java</span></div><h1>Social.java</h1><pre class="source lang-java linenums">package social;
+
+import java.util.*;
+
+
+<span class="fc" id="L6">public class Social {</span>
+<span class="fc" id="L7">	TreeMap&lt;String, Person&gt; users = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L8">	TreeMap&lt;String, Group&gt; groups = new TreeMap&lt;&gt;();</span>
+
+	/**
+	 * Creates a new account for a person
+	 * 
+	 * @param code	nickname of the account
+	 * @param name	first name
+	 * @param surname last name
+	 * @throws PersonExistsException in case of duplicate code
+	 */
+	public void addPerson(String code, String name, String surname) throws PersonExistsException {
+<span class="fc bfc" id="L19" title="All 2 branches covered.">		if (users.containsKey(code)) throw new PersonExistsException();</span>
+<span class="fc" id="L20">		Person tmp  = new Person(code, name, surname);</span>
+<span class="fc" id="L21">		users.put(code, tmp);</span>
+<span class="fc" id="L22">	}</span>
+
+	/**
+	 * Retrieves information about the person given their account code.
+	 * The info consists in name and surname of the person, in order, separated by blanks.
+	 * 
+	 * @param code account code
+	 * @return the information of the person
+	 * @throws NoSuchCodeException
+	 */
+	public String getPerson(String code) throws NoSuchCodeException {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		if (! users.containsKey(code)) throw new NoSuchCodeException();</span>
+<span class="fc" id="L34">		return users.get(code).toString();</span>
+	}
+
+	/**
+	 * Define a friendship relationship between to persons given their codes.
+	 * 
+	 * Friendship is bidirectional: if person A is friend of a person B, that means that person B is a friend of a person A.
+	 * 
+	 * @param codePerson1	first person code
+	 * @param codePerson2	second person code
+	 * @throws NoSuchCodeException in case either code does not exist
+	 */
+	public void addFriendship(String codePerson1, String codePerson2) throws NoSuchCodeException {
+<span class="pc bpc" id="L47" title="1 of 4 branches missed.">		if (! users.containsKey(codePerson1) || ! users.containsKey(codePerson2)) throw new NoSuchCodeException();</span>
+<span class="fc" id="L48">		users.get(codePerson1).addFriend(codePerson2);</span>
+<span class="fc" id="L49">		users.get(codePerson2).addFriend(codePerson1);</span>
+<span class="fc" id="L50">	}</span>
+
+	/**
+	 * Retrieve the collection of their friends given the code of a person.
+	 * 
+	 * 
+	 * @param codePerson code of the person
+	 * @return the list of person codes
+	 * @throws NoSuchCodeException in case the code does not exist
+	 */
+	public Collection&lt;String&gt; listOfFriends(String codePerson) throws NoSuchCodeException {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (! users.containsKey(codePerson)) throw new NoSuchCodeException();</span>
+<span class="fc" id="L62">		return users.get(codePerson).getFriends();</span>
+	}
+
+	/**
+	 * Retrieves the collection of the code of the friends of the friends
+	 * of the person whose code is given, i.e. friends of the second level.
+	 * 
+	 * 
+	 * @param codePerson code of the person
+	 * @return collections of codes of second level friends
+	 * @throws NoSuchCodeException in case the code does not exist
+	 */
+	public Collection&lt;String&gt; friendsOfFriends(String codePerson) throws NoSuchCodeException {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (! users.containsKey(codePerson)) throw new NoSuchCodeException();</span>
+<span class="fc" id="L76">		TreeSet&lt;String&gt; res = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for (String s : users.get(codePerson).getFriends()) {</span>
+<span class="fc" id="L78">			res.addAll(users.get(s).getFriends());</span>
+<span class="fc" id="L79">		}</span>
+<span class="fc" id="L80">		res.remove(codePerson);</span>
+<span class="fc" id="L81">		return res;</span>
+	}
+
+	/**
+	 * Retrieves the collection of the code of the friends of the friends
+	 * of the person whose code is given, i.e. friends of the second level.
+	 * The result has no duplicates.
+	 * 
+	 * 
+	 * @param codePerson code of the person
+	 * @return collections of codes of second level friends
+	 * @throws NoSuchCodeException in case the code does not exist
+	 */
+	public Collection&lt;String&gt; friendsOfFriendsNoRepetition(String codePerson)
+			throws NoSuchCodeException {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (! users.containsKey(codePerson)) throw new NoSuchCodeException();</span>
+<span class="fc" id="L97">		TreeSet&lt;String&gt; res = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (String s : users.get(codePerson).getFriends()) {</span>
+<span class="fc" id="L99">			res.addAll(users.get(s).getFriends());</span>
+<span class="fc" id="L100">		}</span>
+<span class="fc" id="L101">		res.remove(codePerson);</span>
+		
+<span class="fc" id="L103">		return res;</span>
+	}
+
+	/**
+	 * Creates a new group with the given name
+	 * 
+	 * @param groupName name of the group
+	 */
+	public void addGroup(String groupName) {
+<span class="fc" id="L112">		Group tmp = new Group(groupName);</span>
+<span class="fc" id="L113">		groups.put(groupName, tmp);</span>
+<span class="fc" id="L114">	}</span>
+
+	/**
+	 * Retrieves the list of groups.
+	 * 
+	 * @return the collection of group names
+	 */
+	public Collection&lt;String&gt; listOfGroups() {
+<span class="fc" id="L122">		return groups.keySet();</span>
+	}
+
+	/**
+	 * Add a person to a group
+	 * 
+	 * @param codePerson person code
+	 * @param groupName  name of the group
+	 * @throws NoSuchCodeException in case the code or group name do not exist
+	 */
+	public void addPersonToGroup(String codePerson, String groupName) throws NoSuchCodeException {
+<span class="fc bfc" id="L133" title="All 4 branches covered.">		if (! users.containsKey(codePerson) || ! groups.containsKey(groupName)) throw new NoSuchCodeException();</span>
+<span class="fc" id="L134">		groups.get(groupName).addPartecipant(codePerson);</span>
+<span class="fc" id="L135">		users.get(codePerson).addGroup(groupName);</span>
+<span class="fc" id="L136">	}</span>
+
+	/**
+	 * Retrieves the list of people on a group
+	 * 
+	 * @param groupName name of the group
+	 * @return collection of person codes
+	 */
+	public Collection&lt;String&gt; listOfPeopleInGroup(String groupName) {
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (! groups.containsKey(groupName)) return null;</span>
+<span class="fc" id="L146">		return groups.get(groupName).getPartecipants();</span>
+	}
+
+	/**
+	 * Retrieves the code of the person having the largest
+	 * group of friends
+	 * 
+	 * @return the code of the person
+	 */
+	public String personWithLargestNumberOfFriends() {
+<span class="fc" id="L156">		String res = users.values().stream().sorted(Comparator.comparing(Person::getNumberOfFriends).reversed()).map(x -&gt; x.getCode()).toList().get(0);</span>
+<span class="fc" id="L157">		return res;</span>
+	}
+
+	/**
+	 * Find the code of the person with largest number
+	 * of second level friends
+	 * 
+	 * @return the code of the person
+	 */
+	public String personWithMostFriendsOfFriends() {
+		
+<span class="fc" id="L168">		String s = new String();</span>
+<span class="fc" id="L169">		int max = 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for (String u : users.keySet()) {</span>
+			int n;
+			try {
+<span class="fc" id="L173">				n = friendsOfFriendsNoRepetition(u).size();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">				if (n &gt; max) {</span>
+<span class="fc" id="L175">					max = n;</span>
+<span class="fc" id="L176">					s = u;</span>
+				}
+<span class="nc" id="L178">			} catch (NoSuchCodeException e) {</span>
+<span class="fc" id="L179">			}</span>
+<span class="fc" id="L180">		}</span>
+<span class="fc" id="L181">		return s;</span>
+	}
+
+	/**
+	 * Find the name of group with the largest number of members
+	 * 
+	 * @return the name of the group
+	 */
+	public String largestGroup() {
+<span class="fc" id="L190">		String res = groups.values().stream().sorted(Comparator.comparing(Group::getNumberOfPartecipants).reversed()).map(Group::getGroupName).toList().get(0);</span>
+<span class="fc" id="L191">		return res;</span>
+	}
+
+	/**
+	 * Find the code of the person that is member of
+	 * the largest number of groups
+	 * 
+	 * @return the code of the person
+	 */
+	public String personInLargestNumberOfGroups() {
+<span class="fc" id="L201">		String res = users.values().stream().sorted(Comparator.comparing(Person::getNumberOfGroups).reversed()).map(x -&gt; x.getCode()).toList().get(0);</span>
+<span class="fc" id="L202">		return res;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

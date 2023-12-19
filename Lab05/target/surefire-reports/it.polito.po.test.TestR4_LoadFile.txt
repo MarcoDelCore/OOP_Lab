@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: it.polito.po.test.TestR4_LoadFile
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in it.polito.po.test.TestR4_LoadFile
+testSpecialErrorsExtraBlanks(it.polito.po.test.TestR4_LoadFile)  Time elapsed: 0.001 s  <<< ERROR!
+clinic.NoSuchPatient
+	at it.polito.po.test.TestR4_LoadFile.testSpecialErrorsExtraBlanks(TestR4_LoadFile.java:85)
+
+testSubtleErrorsIdNotInt(it.polito.po.test.TestR4_LoadFile)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NumberFormatException: For input string: "B45"
+	at it.polito.po.test.TestR4_LoadFile.testSubtleErrorsIdNotInt(TestR4_LoadFile.java:117)
+

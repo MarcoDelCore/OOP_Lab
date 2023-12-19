@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Group.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">social</a> &gt; <a href="index.source.html" class="el_package">social</a> &gt; <span class="el_source">Group.java</span></div><h1>Group.java</h1><pre class="source lang-java linenums">package social;
+
+import java.util.*;
+
+public class Group {
+	private String code;
+<span class="fc" id="L7">	private ArrayList&lt;String&gt; partecipants = new ArrayList&lt;&gt;();</span>
+	
+<span class="fc" id="L9">	public Group(String c) {</span>
+<span class="fc" id="L10">		code = c;</span>
+<span class="fc" id="L11">	}</span>
+	
+	public void addPartecipant(String code) {
+<span class="fc" id="L14">		partecipants.add(code);</span>
+<span class="fc" id="L15">	}</span>
+	
+	public Collection&lt;String&gt; getPartecipants() {
+<span class="fc" id="L18">		return partecipants;</span>
+	}
+	
+	public int getNumberOfPartecipants() {
+<span class="fc" id="L22">		return partecipants.size();</span>
+	}
+	
+	public String getGroupName() {
+<span class="fc" id="L26">		return code;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

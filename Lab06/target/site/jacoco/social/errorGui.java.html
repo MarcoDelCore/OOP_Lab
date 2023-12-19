@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>errorGui.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">social</a> &gt; <a href="index.source.html" class="el_package">social</a> &gt; <span class="el_source">errorGui.java</span></div><h1>errorGui.java</h1><pre class="source lang-java linenums">package social;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class errorGui extends JFrame{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public JLabel message ;
+	public JButton defaultButton ;
+	
+<span class="nc" id="L21">	public errorGui() {</span>
+<span class="nc" id="L22">		setTitle(&quot;Login error&quot;);</span>
+<span class="nc" id="L23">		setSize(500,500);</span>
+		
+		
+<span class="nc" id="L26">		message = new JLabel(&quot;The user cose in invalid!&quot;);</span>
+<span class="nc" id="L27">		defaultButton = new JButton(&quot;Ok&quot;);</span>
+<span class="nc" id="L28">		setLayout(new BorderLayout());</span>
+<span class="nc" id="L29">		add(message, BorderLayout.NORTH);</span>
+<span class="nc" id="L30">		add(defaultButton, BorderLayout.AFTER_LAST_LINE);</span>
+		
+<span class="nc" id="L32">		defaultButton.addActionListener(</span>
+				evento -&gt; {
+					
+<span class="nc" id="L35">				});</span>
+		
+<span class="nc" id="L37">		setDefaultCloseOperation(DISPOSE_ON_CLOSE);</span>
+
+<span class="nc" id="L39">		setVisible(true);</span>
+<span class="nc" id="L40">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

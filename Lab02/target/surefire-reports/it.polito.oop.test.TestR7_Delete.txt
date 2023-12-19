@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: it.polito.oop.test.TestR7_Delete
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 0 s <<< FAILURE! - in it.polito.oop.test.TestR7_Delete
+testSimpleElementRemove(it.polito.oop.test.TestR7_Delete)  Time elapsed: 0 s  <<< FAILURE!
+java.lang.AssertionError: Wrong number of elements after delete expected:<2> but was:<3>
+	at it.polito.oop.test.TestR7_Delete.testSimpleElementRemove(TestR7_Delete.java:28)
+
+testMultipleDeletes(it.polito.oop.test.TestR7_Delete)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException: Cannot read field "nome" because "e" is null
+	at it.polito.oop.test.TestR7_Delete.testMultipleDeletes(TestR7_Delete.java:170)
+
+testWithSplitUnconnected(it.polito.oop.test.TestR7_Delete)  Time elapsed: 0 s  <<< FAILURE!
+java.lang.AssertionError: Operation should be permitted on a single-connected Split
+	at it.polito.oop.test.TestR7_Delete.testWithSplitUnconnected(TestR7_Delete.java:141)
+
+testSinkAfterSplit(it.polito.oop.test.TestR7_Delete)  Time elapsed: 0 s  <<< FAILURE!
+java.lang.AssertionError: Wrong number of elements after delete expected:<4> but was:<5>
+	at it.polito.oop.test.TestR7_Delete.testSinkAfterSplit(TestR7_Delete.java:93)
+
